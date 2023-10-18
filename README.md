@@ -1,6 +1,11 @@
 ## dotnet boilerplate
 The fastest way to get started with dotnet core to build a restful api server with a structured project.
 
+## Stacks
+- .NET Core 7
+- Entity Framework Core
+- PostgreSQL
+
 ## Features
 Features includes the following:
 
