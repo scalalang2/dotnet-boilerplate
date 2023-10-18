@@ -1,21 +1,44 @@
+using Contracts;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Server.DAL;
+using Server.Models;
+using Server.Services.Users;
 
 namespace Server.Controllers;
 
+[ApiController]
 [Route("users")]
-public class UserController : ControllerBase {
-    private readonly ForumContext _ctx;
+public class UserController : ControllerBase
+{
+    private readonly ILogger<UserController> _logger;
+    private readonly IUserService _userService;
     
-    public UserController(ForumContext ctx) {
-        _ctx = ctx;
-    }
-    
-    [HttpGet]
-    public ActionResult ListUsers()
+    public UserController(ILogger<UserController> logger, IUserService userService)
     {
-        var listofUsers = _ctx.Users.ToList();
-        return Ok(listofUsers);
+        _logger = logger;
+        _userService = userService;
+    }
+
+    [HttpPost("register")]
+    public ActionResult Register(RegisterUserRequest request)
+    {
+        var user = new User
+        {
+            Username = request.Username,
+            Password = request.Password,
+        };
+        var result = _userService.CreateUser(user);
+        return Ok(result);
+    }
+
+    [HttpGet("{id:int}")]
+    public ActionResult GetUser(int id)
+    {
+        var user = _userService.GetUser(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(user);
     }
 }

@@ -1,0 +1,11 @@
+### Create User
+POST http://localhost:5257/users/register
+Content-Type: application/json
+
+{
+  "username": "test",
+  "password": "test"
+}
+
+### Get User
+GET http://localhost:5257/users/1

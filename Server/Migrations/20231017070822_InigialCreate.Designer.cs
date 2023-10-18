@@ -11,7 +11,7 @@ using Server.DAL;
 
 namespace Server.Migrations
 {
-    [DbContext(typeof(ForumContext))]
+    [DbContext(typeof(ServiceContext))]
     [Migration("20231017070822_InigialCreate")]
     partial class InigialCreate
     {

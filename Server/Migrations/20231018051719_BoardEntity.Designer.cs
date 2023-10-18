@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Server.DAL;
@@ -11,9 +12,11 @@ using Server.DAL;
 namespace Server.Migrations
 {
     [DbContext(typeof(ServiceContext))]
-    partial class ForumContextModelSnapshot : ModelSnapshot
+    [Migration("20231018051719_BoardEntity")]
+    partial class BoardEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace Server.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Server.Models.Board", b =>
+            modelBuilder.Entity("Server.Models.BoardEntity", b =>
                 {
                     b.Property<int>("BoardID")
                         .ValueGeneratedOnAdd()
@@ -52,7 +55,7 @@ namespace Server.Migrations
                     b.ToTable("Boards");
                 });
 
-            modelBuilder.Entity("Server.Models.User", b =>
+            modelBuilder.Entity("Server.Models.UserEntity", b =>
                 {
                     b.Property<int>("UserID")
                         .ValueGeneratedOnAdd()
@@ -78,9 +81,9 @@ namespace Server.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Server.Models.Board", b =>
+            modelBuilder.Entity("Server.Models.BoardEntity", b =>
                 {
-                    b.HasOne("Server.Models.User", "User")
+                    b.HasOne("Server.Models.UserEntity", "User")
                         .WithMany()
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
