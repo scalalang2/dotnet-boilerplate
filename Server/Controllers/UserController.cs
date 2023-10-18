@@ -1,4 +1,5 @@
 using Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Server.Models;
 using Server.Services.Users;
@@ -7,6 +8,7 @@ namespace Server.Controllers;
 
 [ApiController]
 [Route("users")]
+[Authorize]
 public class UserController : ControllerBase
 {
     private readonly ILogger<UserController> _logger;
@@ -21,6 +23,11 @@ public class UserController : ControllerBase
     [HttpPost("register")]
     public ActionResult Register(RegisterUserRequest request)
     {
+        if (_userService.Exists(request.Username))
+        {
+            return Conflict(new { message = "user already exists "});
+        }
+        
         var user = new User
         {
             Username = request.Username,
@@ -36,7 +43,7 @@ public class UserController : ControllerBase
         var user = _userService.GetUser(id);
         if (user == null)
         {
-            return NotFound();
+            return NotFound(new { message = "User not found" });
         }
 
         return Ok(user);

@@ -8,4 +8,5 @@ public interface IUserService
     public int CreateUser(User user);
     public User? GetUser(int id);
     public bool Exists(int id);
+    public bool Exists(string username);
 }

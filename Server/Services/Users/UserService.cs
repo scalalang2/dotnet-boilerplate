@@ -50,6 +50,11 @@ public class UserService : IUserService
 
     public bool Exists(int id)
     {
-        return _ctx.Users.Find(id) != null;
+        return _ctx.Users.Any(u => u.UserID == id);
+    }
+
+    public bool Exists(string username)
+    {
+        return _ctx.Users.Any(u => u.Username == username);
     }
 }
