@@ -14,7 +14,7 @@ namespace Server.Controllers;
 [ApiController]
 [Route("users")]
 [Authorize]
-public class UserController : ApiController
+public class UserController : CommonController
 {
     private readonly ILogger<UserController> _logger;
     private readonly IConfiguration _config;
@@ -24,8 +24,8 @@ public class UserController : ApiController
     public UserController(
         ILogger<UserController> logger,
         IConfiguration config,
-        IUserService userService)
-    {
+        IUserService userService
+    ) : base(userService) {
         _logger = logger;
         _config = config;
         _userService = userService;

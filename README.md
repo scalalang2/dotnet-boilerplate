@@ -20,6 +20,18 @@ Features includes the following:
   - List
   - Detail
 
+## How To Use
+```shell
+$ docker-compose up -d
+$ cd Server
+
+# Migrate database
+$ dotnet ef database update
+
+# Run server
+$ dotnet run
+```
+
 ## License
 
 **MIT**

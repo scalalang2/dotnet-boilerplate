@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Server.DAL;
+using Server.Services.Boards;
 using Server.Services.Users;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +25,10 @@ var builder = WebApplication.CreateBuilder(args);
     });
     builder.Services.AddAuthorization();
     builder.Services.AddControllers();
+    
+    // Dependency Injection
     builder.Services.AddScoped<IUserService, UserService>();
+    builder.Services.AddScoped<IBoardService, BoardService>();
     builder.Services.AddDbContext<ServiceContext>(options =>
     {
         options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));

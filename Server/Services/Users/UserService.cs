@@ -14,12 +14,6 @@ public class UserService : IUserService
         _ctx = ctx;
     }
     
-    /// <summary>
-    /// Hash the given string using SHA256.
-    /// It's used to encrypt the password.
-    /// </summary>
-    /// <param name="toHash">normally password given to this parameter</param>
-    /// <returns>generated hash value</returns>
     private string GenerateHash(string toHash) {
         var crypt = SHA256.Create();
         string hash = String.Empty;
@@ -45,12 +39,6 @@ public class UserService : IUserService
         return u.UserID;
     }
 
-    /// <summary>
-    /// Returns true if the user exists and the password matches.
-    /// </summary>
-    /// <param name="username"></param>
-    /// <param name="password"></param>
-    /// <returns>true if the user is valid, otherwise false is returned</returns>
     public bool ValidateUser(string username, string password)
     {
         var query = from u in _ctx.Users
@@ -80,9 +68,9 @@ public class UserService : IUserService
         return query.FirstOrDefault();
     }
 
-    public bool Exists(int id)
+    public User? GetUser(string username)
     {
-        return _ctx.Users.Any(u => u.UserID == id);
+        return _ctx.Users.FirstOrDefault(u => u.Username == username);
     }
 
     public bool Exists(string username)
