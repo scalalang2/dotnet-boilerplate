@@ -7,5 +7,16 @@ Content-Type: application/json
   "password": "test"
 }
 
+### Login
+POST http://localhost:5257/users/login
+Content-Type: application/json
+
+{
+  "username": "test1234",
+  "password": "test"
+}
+
 ### Get User
 GET http://localhost:5257/users/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4M2M5NzgyMy0zYTU2LTQ4MzctOTJhZS05MzZkMjBhNDVmNzMiLCJzdWIiOiJ0ZXN0MTIzNCIsImV4cCI6MTY5NzcxOTcwOSwibmJmIjoxNjk3NjkwOTA5LCJpYXQiOjE2OTc2OTA5MDksImlzcyI6InNvbWUgaXNzdWVyIiwiYXVkIjoic29tZSBhdWRpZW5jZSJ9.-qSlKcjcuMawf1s4hjRyum7sPaJLw4pzJtm70T5hLT4
+
