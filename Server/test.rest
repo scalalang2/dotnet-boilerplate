@@ -3,7 +3,7 @@ POST http://localhost:5257/users/register
 Content-Type: application/json
 
 {
-  "username": "test_user",
+  "username": "test_user2",
   "password": "test_password"
 }
 
@@ -12,13 +12,33 @@ POST http://localhost:5257/users/login
 Content-Type: application/json
 
 {
-  "username": "test_user",
+  "username": "test_user2",
   "password": "test_password"
 }
 
 ### Get User
 GET http://localhost:5257/users/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4M2M5NzgyMy0zYTU2LTQ4MzctOTJhZS05MzZkMjBhNDVmNzMiLCJzdWIiOiJ0ZXN0MTIzNCIsImV4cCI6MTY5NzcxOTcwOSwibmJmIjoxNjk3NjkwOTA5LCJpYXQiOjE2OTc2OTA5MDksImlzcyI6InNvbWUgaXNzdWVyIiwiYXVkIjoic29tZSBhdWRpZW5jZSJ9.-qSlKcjcuMawf1s4hjRyum7sPaJLw4pzJtm70T5hLT4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3YTA5MTI2Ny0xMjcxLTQ1YTQtYjRlMi03NTJhMWJhYmZiZjEiLCJzdWIiOiJ0ZXN0X3VzZXIiLCJleHAiOjE2OTc4MTE4MDksInVzciI6InRlc3RfdXNlciIsIm5iZiI6MTY5Nzc4MzAwOSwiaWF0IjoxNjk3NzgzMDA5LCJpc3MiOiJzb21lIGlzc3VlciIsImF1ZCI6InNvbWUgYXVkaWVuY2UifQ.zVXuRfcP8VXGHXrLdFij7TWD7k9B1Xrq5Vn3RRXsbH8
+
+### Create new board
+POST http://localhost:5257/boards
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3YTA5MTI2Ny0xMjcxLTQ1YTQtYjRlMi03NTJhMWJhYmZiZjEiLCJzdWIiOiJ0ZXN0X3VzZXIiLCJleHAiOjE2OTc4MTE4MDksInVzciI6InRlc3RfdXNlciIsIm5iZiI6MTY5Nzc4MzAwOSwiaWF0IjoxNjk3NzgzMDA5LCJpc3MiOiJzb21lIGlzc3VlciIsImF1ZCI6InNvbWUgYXVkaWVuY2UifQ.zVXuRfcP8VXGHXrLdFij7TWD7k9B1Xrq5Vn3RRXsbH8
+Content-Type: application/json
+
+{
+  "title": "about us",
+  "content": "this is about us page"
+}
+
+### Update the board
+PUT http://localhost:5257/boards/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1NmZiM2JlNS0xYmYyLTQ3NDctYWYxOS0zOTkwNjgwMDRlOTQiLCJzdWIiOiJ0ZXN0X3VzZXIyIiwiZXhwIjoxNjk3ODExOTg2LCJ1c3IiOiJ0ZXN0X3VzZXIyIiwibmJmIjoxNjk3NzgzMTg2LCJpYXQiOjE2OTc3ODMxODYsImlzcyI6InNvbWUgaXNzdWVyIiwiYXVkIjoic29tZSBhdWRpZW5jZSJ9.7PAJocFuz-1bF1e67UHVQB3Ju-NDDuI5dT0X2wlTpEE
+Content-Type: application/json
+
+{
+  "title": "updated title",
+  "content": "updated content"
+}
 
 ### Board List
-GET http://localhost:5257/boards/list?page=10&size=10
+GET http://localhost:5257/boards/list?offset=0&limit=10

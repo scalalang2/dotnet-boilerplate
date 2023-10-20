@@ -1,3 +1,4 @@
+using Contracts.Boards;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Server.Models;
@@ -29,25 +30,52 @@ public class BoardController : CommonController
     [HttpGet("list")]
     public IActionResult List([FromQuery] PagingOptions pagingOptions)
     {
-        return Ok();
+        return Ok(_boardService.List(pagingOptions));
     }
     
     [Authorize]
-    public IActionResult Create()
+    public IActionResult Create(CreateBoardRequest request)
     {
-        return Ok();
+        var user = GetUser();
+        _boardService.Create(new Board()
+        {
+            Title = request.Title,
+            Content = request.Content,
+            PublishedOn = DateTime.UtcNow,
+            UserID = user.UserID,
+        });
+        return Ok(new { message = "New article published" });
     }
 
     [HttpGet("{id:int}")]
     public IActionResult FindById(int id)
     {
-        return Ok();
+        return Ok(_boardService.FindById(id));
     }
 
     [Authorize]
     [HttpPut("{id:int}")]
-    public IActionResult Update(int id)
+    public IActionResult Update(int id, UpdateBoardRequest request)
     {
+        var user = GetUser();
+        var board = _boardService.FindById(id);
+        if (board == null)
+        {
+            return NotFound();
+        }
+
+        if (user.UserID != board.UserID)
+        {
+            return Unauthorized();
+        }
+        
+        _boardService.Update(new Board()
+        {
+            BoardID = id,
+            Title = request.Title,
+            Content = request.Content,
+        });
+        
         return Ok();
     }
 
@@ -55,6 +83,19 @@ public class BoardController : CommonController
     [HttpDelete("{id:int}")]
     public IActionResult Delete(int id)
     {
+        var user = GetUser();
+        var board = _boardService.FindById(id);
+        if (board == null)
+        {
+            return NotFound();
+        }
+        
+        if (user.UserID != board.UserID)
+        {
+            return Unauthorized();
+        }
+        
+        _boardService.Delete(id);
         return Ok();
     }
 }

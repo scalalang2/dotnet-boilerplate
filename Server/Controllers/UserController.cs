@@ -84,6 +84,7 @@ public class UserController : CommonController
             new(JwtRegisteredClaimNames.Sub, username), // Subject
             new(JwtRegisteredClaimNames.Exp,
                 new DateTimeOffset(DateTime.Now.Add(TokenLifeTime)).ToUnixTimeSeconds().ToString()), // Expiration
+            new("usr", username)
         };
         
         var tokenDescriptor = new SecurityTokenDescriptor

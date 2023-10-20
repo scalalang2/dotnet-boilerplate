@@ -13,17 +13,27 @@ public class CommonController : ControllerBase
         _userService = userService;
     }
     
-    protected string? GetUsername()
+    protected string GetUsername()
     {
         var principal = HttpContext.User;
-        var username = principal.Claims.SingleOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub)?.Value;
-        return username;
+        var claim = principal.Claims.SingleOrDefault(c => c.Type == "usr");
+        if (claim == null)
+        {
+            throw new Exception("No username claim found in token. This is unexpected error");
+        }
+        
+        return claim.Value;
     }
 
-    protected User? GetUser()
+    protected User GetUser()
     {
         var username = GetUsername();
-        if (username == null) return null;
-        return _userService.GetUser(username);
+        var user = _userService.GetUser(username);
+        if (user == null)
+        {
+            throw new Exception("No user found for username " + username);   
+        }
+        
+        return user!;
     }
 }
